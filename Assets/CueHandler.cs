@@ -16,7 +16,8 @@ public class CueHandler : MonoBehaviour {
 
 
     private Rigidbody cueRB;
-    
+    private bool isGrabbedCue = false ;
+    private int countGrabbed;
 
 
     private float lockOffset;
@@ -35,6 +36,9 @@ public class CueHandler : MonoBehaviour {
         UpdateCuePosition();
     }
 
+
+
+
     void UpdateCuePosition()
     {
 
@@ -42,27 +46,50 @@ public class CueHandler : MonoBehaviour {
         Vector3 frontPos = leftHand.transform.position;
         Vector3 backPos = rightHand.transform.position;
 
-        if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
-        {
-            //print("first press");
-            
-            lockForward = transform.up;
-            lockOffset = (frontPos - backPos).magnitude;
-        }
-        else if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
-        {
-            //print("held");
-            float currOffset = (frontPos - backPos).magnitude;
-            cueRB.MovePosition(cuePos + lockForward * (lockOffset - currOffset));
-        }
-        else
-        {
-            cuePos = 0.75f * backPos + 0.25f * frontPos;
-            cueRB.MovePosition(cuePos);
-            cueRB.MoveRotation(Quaternion.LookRotation(frontPos - backPos) * Quaternion.Euler(90f, 0f, 0f));
-        }
 
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            countGrabbed++;
+           
+        }
+ if (countGrabbed % 2 == 0)
+            {
+                //cuePos = new Vector3(14,-25,-12) ;
+                //cueRB.MovePosition(cuePos);
 
+                if (OVRInput.GetDown(OVRInput.Button.One))
+                {
+                    print("buttone one");
+                    //cuePos = 0.25f * frontPos;
+                    //cueRB.MovePosition(cuePos);
+                    //cueRB.MoveRotation(Quaternion.LookRotation(frontPos) * Quaternion.Euler(90f, 0f, 0f));
+                }
+                if (OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger))
+                {
+
+                    //print("first press");
+
+                    lockForward = transform.up;
+                    lockOffset = (frontPos - backPos).magnitude;
+
+                }
+                else if (OVRInput.Get(OVRInput.Button.SecondaryIndexTrigger))
+                {
+
+                    //print("held");
+                    float currOffset = (frontPos - backPos).magnitude;
+                    cueRB.MovePosition(cuePos + lockForward * (lockOffset - currOffset));
+
+                }
+                else
+                {
+
+                    cuePos = 0.75f * backPos + 0.25f * frontPos;
+                    cueRB.MovePosition(cuePos);
+                    cueRB.MoveRotation(Quaternion.LookRotation(frontPos - backPos) * Quaternion.Euler(90f, 0f, 0f));
+
+                }
+            }
 
 
         // HTC VIVE 

@@ -31,7 +31,7 @@ public class CueHandler : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         
-        Debug.Log("Input:" + OVRInput.GetControllerPositionTracked(OVRInput.Controller.LTouch) + "  ->  "+ OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
+       // Debug.Log("Input:" + OVRInput.GetControllerPositionTracked(OVRInput.Controller.LTouch) + "  ->  "+ OVRInput.GetLocalControllerPosition(OVRInput.Controller.LTouch));
 
         UpdateCuePosition();
     }
